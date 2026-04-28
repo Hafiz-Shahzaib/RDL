@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import logo from "../assets/logo.jpg";
 import { IoPersonCircle } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { GiSplitCross } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -65,7 +67,25 @@ function Nav() {
 
             {/* for Dashboard */}
 
+            {userData && <div className='px-[20px] py-[10px] border-2 border-white bg-black rounded-[10px] text-[18px] font-light cursor-pointer' onClick={handleDashboardNavigation}>Dashboard</div>}
+
+            {!userData ? <span className='px-[20px] py-[10px] border-2 border-white text-white bg-[black] rounded-[10px]text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={()=>navigate("/login")}>Login</span>:
+            <span className='px-[20px] py-[10px] bg-white text-black rounded-[10px] shadow-sm shadow-black text-[18px] cursor-pointer' onClick={handleLogOut}>LogOut</span>}
+
+            {show && <div className='absolute top-[110%] right-[15%] flex items-center flex-col justify-center gap-2 text-[16px] rounded-md bg-[white] px-[15px] py-[10px] border-[2px] border-black hover:border-white hover:text-white cursor-pointer hover:bg-black'>
+              <span className='bg-black text-white px-[30px] py-[10px] rounded-2xl hover:bg-gray-600' onClick={()=>navigate("/profile")}>My Profile</span>
+              <span className='bg-black text-white px-[30px] py-[10px] rounded-2xl hover:bg-gray-600' onClick={()=>navigate("/mycourses")}>My Courses</span>
+            </div>}
+
         </div>
+
+        <RxHamburgerMenu className='w-[35px] h-[35px] lg:hidden text-white cursor-pointer' onClick={()=>setShowHam(prev=>!prev)}/>
+
+          <div className={`fixed top-0 left-0 w-[100vw] h-[100vh] bg-[#000000d6] flec items-center justify-center flex-col gap-5 z-10 lg:hidden ${showHam ? "translate-x-0 transition duration-600" : "translate-x-[-100%] transition duration-600"}`}>
+            <GiSplitCross className='w-[35px] h-[35px] fill-white absolute top-5 right-[4%]' onClick={()=>setShowHam(prev=>!prev)}/>
+              {!userData}
+          </div>
+
       </div>
       
     </div>
